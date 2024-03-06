@@ -6,6 +6,9 @@ import { StatusBar } from "expo-status-bar"
 import * as SplashScreen from "expo-splash-screen"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 
+import { SQLiteProvider } from "expo-sqlite/next"
+import { databaseInit } from "@/database/databaseInit"
+
 import {
   useFonts,
   OpenSans_700Bold,
@@ -35,7 +38,9 @@ export default function Layout() {
       style={{ flex: 1, backgroundColor: colors.gray[600] }}
     >
       <StatusBar style="light" />
-      <Slot />
+      <SQLiteProvider databaseName="mygoals.db" onInit={databaseInit}>
+        <Slot />
+      </SQLiteProvider>
     </GestureHandlerRootView>
   )
 }
