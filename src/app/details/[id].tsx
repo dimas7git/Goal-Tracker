@@ -5,6 +5,9 @@ import { router, useLocalSearchParams } from "expo-router"
 import Bottom from "@gorhom/bottom-sheet"
 import dayjs from "dayjs"
 
+// DATABASE 
+import { useGoalsRepository } from "@/database/useGoalRepository"
+
 // COMPONENTS
 import { Input } from "@/components/Input"
 import { Header } from "@/components/Header"
@@ -39,6 +42,9 @@ export default function Details() {
   const routeParams = useLocalSearchParams()
   const goalId = Number(routeParams.id)
 
+  //DATABASE
+  const useGoal = useGoalsRepository()
+
   // BOTTOM SHEET
   const bottomSheetRef = useRef<Bottom>(null)
   const handleBottomSheetOpen = () => bottomSheetRef.current?.expand()
@@ -47,7 +53,7 @@ export default function Details() {
   function fetchDetails() {
     try {
       if (goalId) {
-        const goal = mocks.goal
+        const goal = useGoal.show(goalId)
         const transactions = mocks.transactions
 
         if (!goal || !transactions) {
