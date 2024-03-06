@@ -15,6 +15,7 @@ import { Transactions, TransactionsProps } from "@/components/Transactions"
 
 // DATABASE
 import { useGoalsRepository } from "@/database/useGoalRepository"
+import { useTransactionRepository } from "@/database/useTransactionRepository"
 
 // UTILS
 import { mocks } from "@/utils/mocks"
@@ -30,7 +31,7 @@ export default function Home() {
 
   // DATABASE
   const useGoal = useGoalsRepository()
-
+  const useTransaction = useTransactionRepository()
   // BOTTOM SHEET
   const bottomSheetRef = useRef<Bottom>(null)
   const handleBottomSheetOpen = () => bottomSheetRef.current?.expand()
@@ -82,7 +83,7 @@ export default function Home() {
 
   async function fetchTransactions() {
     try {
-      const response = mocks.transactions
+      const response = useTransaction.findLatest()
 
       setTransactions(
         response.map((item) => ({
