@@ -4,7 +4,7 @@ import { Alert, View, Keyboard } from "react-native"
 import Bottom from "@gorhom/bottom-sheet"
 import { router } from "expo-router"
 import dayjs from "dayjs"
-
+import { KeyboardAvoidingView, Platform } from 'react-native';
 // COMPONENTS
 import { Input } from "@/components/Input"
 import { Header } from "@/components/Header"
@@ -57,6 +57,7 @@ export default function Home() {
 
       setName("")
       setTotal("")
+      fetchGoals()
     } catch (error) {
       Alert.alert("Erro", "Não foi possível cadastrar.")
       console.log(error)
@@ -102,6 +103,10 @@ export default function Home() {
   }, [])
 
   return (
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={{ flex: 1 }}
+  >
     <View className="flex-1 p-8">
       <Header
         title="Suas metas"
@@ -134,5 +139,6 @@ export default function Home() {
         <Button title="Criar" onPress={handleCreate} />
       </BottomSheet>
     </View>
+  </KeyboardAvoidingView>
   )
 }

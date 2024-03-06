@@ -4,7 +4,7 @@ import { Alert, Keyboard, View } from "react-native"
 import { router, useLocalSearchParams } from "expo-router"
 import Bottom from "@gorhom/bottom-sheet"
 import dayjs from "dayjs"
-
+import { KeyboardAvoidingView, Platform } from 'react-native';
 // DATABASE 
 import { useGoalsRepository } from "@/database/useGoalRepository"
 
@@ -117,6 +117,10 @@ export default function Details() {
   }
 
   return (
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={{ flex: 1 }}
+  >
     <View className="flex-1 p-8 pt-12">
       <BackButton />
 
@@ -146,5 +150,6 @@ export default function Details() {
         <Button title="Confirmar" onPress={handleNewTransaction} />
       </BottomSheet>
     </View>
+    </KeyboardAvoidingView>
   )
 }
